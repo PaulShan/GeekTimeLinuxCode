@@ -11,7 +11,7 @@ int main ()
     char* arg_list[] = {
         "ls",
         "-l",
-        "/etc/yum.repos.d/",
+        "/etc",
         NULL
     };
     create_process ("ls", arg_list);
