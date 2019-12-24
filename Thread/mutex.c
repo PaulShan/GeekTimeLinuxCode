@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
   for(t=0;t<100;t++){
     //第一次运行去掉下面这行
     pthread_mutex_lock(&g_money_lock);
+    sleep(rand()%3);
+
     printf("money_of_tom + money_of_jerry = %d\n", money_of_tom + money_of_jerry);
     //第一次运行去掉下面这行
     pthread_mutex_unlock(&g_money_lock);
