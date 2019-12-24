@@ -3,26 +3,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NUM_OF_TASKS 5
+#define NUM_OF_TASKS 10 
 
 int money_of_tom = 100;
 int money_of_jerry = 100;
 //第一次运行去掉下面这行
 pthread_mutex_t g_money_lock;
-
+int finishedTasks = 0;
 void *transfer(void *notused)
 {
   pthread_t tid = pthread_self();
-  printf("Thread %u is transfering money!\n", (unsigned int)tid);
+ // printf("Thread %u is transfering money!\n", (unsigned int)tid);
   //第一次运行去掉下面这行
+  sleep(rand()%20);
   pthread_mutex_lock(&g_money_lock);
-  sleep(rand()%10);
+  printf("Thread %u entering transactions!\n", (unsigned int)tid);
+  sleep(rand()%2);
   money_of_tom+=10;
-  sleep(rand()%10);
+  sleep(rand()%2);
   money_of_jerry-=10;
+  ++finishedTasks;
   //第一次运行去掉下面这行
   pthread_mutex_unlock(&g_money_lock);
-  printf("Thread %u finish transfering money!\n", (unsigned int)tid);
+  printf("Thread %u finish transfering money!, finished tasks %d \n", (unsigned int)tid, finishedTasks);
   pthread_exit((void *)0);
 }
 
@@ -46,7 +49,7 @@ int main(int argc, char *argv[])
     //第一次运行去掉下面这行
     pthread_mutex_lock(&g_money_lock);
     sleep(rand()%3);
-
+    if(finishedTasks == NUM_OF_TASKS) break;
     printf("money_of_tom + money_of_jerry = %d\n", money_of_tom + money_of_jerry);
     //第一次运行去掉下面这行
     pthread_mutex_unlock(&g_money_lock);
