@@ -10,7 +10,7 @@ void *downloadfile(void *filename)
    printf("I am downloading the file %s!\n", (char *)filename);
    sleep(10);
    long downloadtime = rand()%100;
-   printf("I finish downloading the file within %d minutes!\n", downloadtime);
+   printf("I finish downloading the file within %ld minutes!\n", downloadtime);
    pthread_exit((void *)downloadtime);
 }
 
